@@ -8,10 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -74,6 +71,53 @@ public class RedisCommon {
             }
         }
         return resultSet;
+    }
+
+    public <T> void addToListLeft(String key, T value) {
+        String jsonValue = gson.toJson(value);
+        template.opsForList().leftPush(key, jsonValue);
+    }
+
+    public <T> void addToListRight(String key, T value) {
+        String jsonValue = gson.toJson(value);
+        template.opsForList().rightPush(key, jsonValue);
+    }
+
+    public <T> List<T> getAllList(String key, Class<T> clazz) {
+        List<String> jsonValues = template.opsForList().range(key, 0, -1);
+        List<T> resultSet = new ArrayList<>();
+
+        if (jsonValues != null) {
+            for (String jsonValue : jsonValues) {
+                T value = gson.fromJson(jsonValue, clazz);
+                resultSet.add(value);
+            }
+        }
+        return resultSet;
+    }
+
+    public <T> void removeFromList(String key, T value) {
+        String jsonValue = gson.toJson(value);
+        template.opsForList().remove(key, 1, jsonValue);
+    }
+
+    public <T> void putInHash(String key, String field, T value) {
+        String jsonValue = gson.toJson(value);
+        template.opsForHash().put(key, field, jsonValue);
+    }
+
+    public <T> T getFromHash(String key, String field, Class<T> clazz) {
+        Object result = template.opsForHash().get(key, field);
+
+        if (result != null) {
+            return clazz.cast(result);
+        }
+
+        return null;
+    }
+
+    public void removeFromHash(String key, String field) {
+        template.opsForHash().delete(key, field);
     }
 
 }
