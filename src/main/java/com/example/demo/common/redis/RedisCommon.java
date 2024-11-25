@@ -31,8 +31,8 @@ public class RedisCommon {
 
     public <T> void setData(String key, T value) {
         String jsonValue = gson.toJson(value);
-//        template.opsForValue().set(key, jsonValue);
-        template.opsForValue().setIfPresent(key, jsonValue);
+        template.opsForValue().set(key, jsonValue);
+//        template.opsForValue().setIfPresent(key, jsonValue);
         template.expire(key, defaultExpireTime);
     }
 
