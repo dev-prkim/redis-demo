@@ -61,9 +61,9 @@ public class RedisCommon {
         return resultSet;
     }
 
-    public <T> Set<T> getTopNFromSortedSet(String key, int n, Class<T> clazz) {
+    public <T> List<T> getTopNFromSortedSet(String key, int n, Class<T> clazz) {
         Set<String> jsonValues = template.opsForZSet().reverseRange(key, 0, n-1);
-        Set<T> resultSet = new HashSet<T>();
+        List<T> resultSet = new ArrayList<>();
         if (jsonValues != null) {
             for (String jsonValue : jsonValues) {
                 T v = gson.fromJson(jsonValue, clazz);
@@ -110,7 +110,7 @@ public class RedisCommon {
         Object result = template.opsForHash().get(key, field);
 
         if (result != null) {
-            return clazz.cast(result);
+            return gson.fromJson(result.toString(), clazz);
         }
 
         return null;
