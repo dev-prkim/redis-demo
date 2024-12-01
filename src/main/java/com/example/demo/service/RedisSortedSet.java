@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.common.redis.RedisCommon;
-import com.example.demo.domain.string.model.SortedSetModel;
-import com.example.demo.domain.string.model.request.SortedSetRequest;
+import com.example.demo.domain.model.SortedSetModel;
+import com.example.demo.domain.model.request.SortedSetRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

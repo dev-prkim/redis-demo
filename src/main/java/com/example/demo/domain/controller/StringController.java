@@ -1,8 +1,8 @@
-package com.example.demo.domain.string.controller;
+package com.example.demo.domain.controller;
 
-import com.example.demo.domain.string.model.request.MultiStringRequest;
-import com.example.demo.domain.string.model.request.StringRequest;
-import com.example.demo.domain.string.model.response.StringResponse;
+import com.example.demo.domain.model.request.MultiStringRequest;
+import com.example.demo.domain.model.request.StringRequest;
+import com.example.demo.domain.model.response.StringResponse;
 import com.example.demo.service.RedisString;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

@@ -1,6 +1,6 @@
-package com.example.demo.domain.string.model.response;
+package com.example.demo.domain.model.response;
 
-import com.example.demo.domain.string.model.StringModel;
+import com.example.demo.domain.model.StringModel;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;

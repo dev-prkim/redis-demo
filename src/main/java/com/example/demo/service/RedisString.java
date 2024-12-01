@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.common.redis.RedisCommon;
-import com.example.demo.domain.string.model.StringModel;
-import com.example.demo.domain.string.model.request.MultiStringRequest;
-import com.example.demo.domain.string.model.request.StringRequest;
-import com.example.demo.domain.string.model.response.StringResponse;
+import com.example.demo.domain.model.StringModel;
+import com.example.demo.domain.model.request.MultiStringRequest;
+import com.example.demo.domain.model.request.StringRequest;
+import com.example.demo.domain.model.response.StringResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

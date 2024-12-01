@@ -1,7 +1,7 @@
-package com.example.demo.domain.string.controller;
+package com.example.demo.domain.controller;
 
-import com.example.demo.domain.string.model.SortedSetModel;
-import com.example.demo.domain.string.model.request.SortedSetRequest;
+import com.example.demo.domain.model.request.SortedSetRequest;
+import com.example.demo.domain.model.SortedSetModel;
 import com.example.demo.service.RedisSortedSet;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

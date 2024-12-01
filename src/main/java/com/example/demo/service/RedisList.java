@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.common.redis.RedisCommon;
-import com.example.demo.domain.string.model.ListModel;
-import com.example.demo.domain.string.model.request.ListRequest;
+import com.example.demo.domain.model.ListModel;
+import com.example.demo.domain.model.request.ListRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

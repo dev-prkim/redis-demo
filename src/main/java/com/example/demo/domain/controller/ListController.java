@@ -1,7 +1,7 @@
-package com.example.demo.domain.string.controller;
+package com.example.demo.domain.controller;
 
-import com.example.demo.domain.string.model.ListModel;
-import com.example.demo.domain.string.model.request.ListRequest;
+import com.example.demo.domain.model.request.ListRequest;
+import com.example.demo.domain.model.ListModel;
 import com.example.demo.service.RedisList;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

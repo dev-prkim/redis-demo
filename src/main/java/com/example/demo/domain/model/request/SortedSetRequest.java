@@ -1,17 +1,22 @@
-package com.example.demo.domain.string.model.request;
+package com.example.demo.domain.model.request;
 
 import com.example.demo.common.request.BaseRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-@Schema(description = "redis string collection request")
-public record StringRequest(
+@Schema(description = "redis sorted set request")
+public record SortedSetRequest(
         BaseRequest baseRequest,
 
         @Schema(description = "name")
         @NotBlank
         @NotNull
-        String Name
+        String Name,
+
+        @Schema(description = "score")
+        @NotBlank
+        @NotNull
+        Float Score
 ) {
 }

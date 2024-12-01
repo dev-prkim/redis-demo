@@ -1,7 +1,7 @@
-package com.example.demo.domain.string.controller;
+package com.example.demo.domain.controller;
 
-import com.example.demo.domain.string.model.HashModel;
-import com.example.demo.domain.string.model.request.HashRequest;
+import com.example.demo.domain.model.request.HashRequest;
+import com.example.demo.domain.model.HashModel;
 import com.example.demo.service.RedisHash;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

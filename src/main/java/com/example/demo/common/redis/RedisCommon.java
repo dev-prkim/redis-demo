@@ -1,10 +1,17 @@
 package com.example.demo.common.redis;
 
+import com.example.demo.domain.model.ValueWithTTL;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.StringRedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -118,6 +125,50 @@ public class RedisCommon {
 
     public void removeFromHash(String key, String field) {
         template.opsForHash().delete(key, field);
+    }
+
+    public void setBit(String key, long offset, boolean value) {
+        template.opsForValue().setBit(key, offset, value);
+    }
+
+    public boolean getBit(String key, long offset) {
+        return template.opsForValue().getBit(key, offset);
+    }
+
+    public <T> ValueWithTTL<T> getValueWithTTL(String key, Class<T> clazz) {
+        T value = null;
+        Long ttl = null;
+
+        try {
+
+            List<Object> results = template.executePipelined(new RedisCallback<Object>() {
+                public Object doInRedis(RedisConnection connection) throws DataAccessException {
+                    StringRedisConnection conn = (StringRedisConnection) connection;
+                    conn.get(key);
+                    conn.ttl(key);
+
+                    return null;
+                }
+            });
+
+            value = (T) gson.fromJson((String) results.get(0), clazz);
+            ttl = (Long) results.get(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new ValueWithTTL<T>(value, ttl);
+    }
+
+    public Long sumTwoKeyAndRenew(String key1, String key2, String resultKey) {
+
+        DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>();
+        redisScript.setLocation(new ClassPathResource("/lua/newKey.lua"));
+        redisScript.setResultType(Long.class);
+
+        List<String> keys = Arrays.asList(key1, key2, resultKey);
+
+        return template.execute(redisScript, keys);
     }
 
 }
