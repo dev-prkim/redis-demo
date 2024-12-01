@@ -4,10 +4,13 @@ import com.example.demo.common.redis.RedisCommon;
 import com.example.demo.domain.model.StringModel;
 import com.example.demo.domain.model.ValueWithTTL;
 import lombok.RequiredArgsConstructor;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 캐싱 전략 관련 샘플 서비스 코드
@@ -16,6 +19,24 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class RedisStrategy {
     private final RedisCommon redis;
+    private final RedissonClient redissonClient;
+
+    public void lockSample() {
+        // 락 획득
+        RLock lock = redissonClient.getLock("sample");
+
+        try {
+            boolean isLocked = lock.tryLock(10, 60, TimeUnit.SECONDS);
+
+            if(isLocked) {
+
+            }
+        } catch(InterruptedException e) {
+
+        }
+
+        lock.unlock();
+    }
 
     public StringModel simpleStrategy(String key) {
         StringModel model = redis.getData(key, StringModel.class);
